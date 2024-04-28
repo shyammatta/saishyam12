@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Song Player</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    *{
+        box-sizing: border-box;
+    }
+    #animation{
+        margin: 200px ;
+        display: flex;
+        justify-content: center;
+    }
+ #searchResults{
+        position: absolute;
+
+        /* margin-top: 180px; */
+        margin-top:210px ;
+        margin-left:78px;
+        text-decoration: none;
+    }
+    a{
+        text-decoration: none;
+        color: rgb(242, 223, 223);
+        font-size: 18px;
+        display: inline-block;
+        width: 200px;
+         }
+         a:hover{
+            text-decoration: none;
+            color: blueviolet;
+         }
+    #search{
+        display: flex;
+        margin-top: 30px;
+        justify-content: center;
+        
+    }
+    #img{
+        background-image: url("./love1.jpg");
+        background-position: center;
+        background-size: cover;
+        background-color: rgb(185, 203, 203);
+        width: 250px;
+        height: 380px;
+         margin: 40px auto;
+    }
+    img{
+        height: 300px;
+
+    }
+    #butt{
+        background-color: green;
+        color: white;
+        width: 100px;
+        border-radius: 16px;
+        position: relative;
+        left: 15px;
+        border: none;
+    }
+    #searchInput{
+        position: relative;
+        left: 0px;
+        outline: none;
+    }
+    h2{
+        color: white;
+        margin-left: 40px ;
+        padding-top: 30px;
+    }
+    @media screen and (max-width:560px)  {
+        
+        #img{
+            width:80%;
+            height: 500px;
+
+
+        }
+        #search{
+            width: 40%;
+            margin-left: 30%;
+        }
+        body{
+            width: 450px;
+            height: 100vh;
+        }
+        img{
+            height: 400px;
+        }
+        #audioPlayer{
+            display: flex;
+            margin:40px auto;
+        }
+        #searchResults{
+            margin-top: 330px;
+            margin-left: 120px;
+            font-size: 50px;
+        }
+
+
+        #searchInput{
+         height: 45px;
+
+        }
+       }
+    #content{
+        display: none;
+        
+    }
+
+</style>
+</head>
+<body style="background-color: black;" >
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+<div id="animation" >
+    <img src="./spotify-taiga.gif" alt="">
+</div>
+    
+    <div id="content">
+<div id="search">
+    
+<input type="text" id="searchInput" placeholder="Search for a song...">
+<button id="butt" onclick="search()">Search</button>
+</div>
+
+<div id="img" >
+    <div id="">    
+        <h2>Love Songs</h2>
+    </div>
+
+    <div id="searchResults"></div>
+    <!-- <img class="card-img-top" src="./love1.jpg" alt=""> -->
+
+
+<audio id="audioPlayer" style="margin-top:250px;margin-left: 10px;width: 230px;z-index: 2;height: 45px;opacity: 0.4;"  controls>
+  Your browser does not support the audio element.
+</audio>
+</div>
+</div>
+
+
+<script>
+     window.onload = function() {
+      var animation = document.getElementById('animation');
+      setTimeout(function() {
+        animation.style.display = 'none';
+      }, 4600); // Change 5000 to the number of milliseconds you want the animation to play before hiding (e.g., 5000 for 5 seconds)
+    };
+const songs = [
+  { title: "urigi urigi      poyinade joe ", src: "song1.mp3"},
+  { title: "anuvanuvu               om bhim bush", src: "anuvanuvu.mp3" },
+  { title: "emai poyave      padi padi lecha manasu ", src: "emai poyave.mp3"},
+  { title: "gali valuga       agnathavasi", src: "gali valuga.mp3"},
+
+
+
+  // Add more songs as needed
+];
+
+function search() {
+    var input = document.getElementById("searchInput").value.toLowerCase();
+    var resultsDiv = document.getElementById("searchResults");
+    resultsDiv.innerHTML = ""; // Clear previous results
+
+    // Loop through the songs
+    songs.forEach(song => {
+        if (song.title.toLowerCase().includes(input)) {
+            var link = document.createElement("a");
+            link.href = "#"; // Add link behavior if needed
+            link.textContent = song.title.substring(0,16);
+            link.onclick = function() {
+                playSong(song.src);
+            };
+            resultsDiv.appendChild(link);
+            resultsDiv.appendChild(document.createElement(""));
+        }
+    });
+}
+
+function playSong(src) {
+    var audioPlayer = document.getElementById("audioPlayer");
+    audioPlayer.src = src;
+    audioPlayer.play();
+}
+//for displaying after 5 seconds
+setTimeout(function() {
+        document.getElementById('content').style.display = 'block';
+      }, 5000); 
+   
+</script>
+
+
+
+
+</body>
+</html>
+
+
+    
+    
+    
+
